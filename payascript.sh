@@ -180,9 +180,9 @@ function cleanNetwork() {
 
     rm -f docker-compose-am.yaml
     rm -f docker-compose-watcher.yaml
+    docker swarm leave -f
     docker volume rm -f $(docker volume ls -q)
-    docker rm -f $(docker ps -aq)
-  #  docker rmi -f $(docker images -q)
+    docker rmi -f $(docker images -q)
     docker stack rm fabric
     
 }

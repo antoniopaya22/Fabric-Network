@@ -1,13 +1,18 @@
-# HF-Demo
+# Fabric-Network
 
-# Índice:
+## Índice
+1. [Home](https://github.com/antonioalfa22/Fabric-Network/wiki)
+2. [Prerrequisitos](https://github.com/antonioalfa22/Fabric-Network/wiki/Prerrequisitos)
+    1. [Instalación](https://github.com/antonioalfa22/Fabric-Network/wiki/Prerrequisitos#instalaci%C3%B3n)
+        1. [Curl](https://github.com/antonioalfa22/Fabric-Network/wiki/Prerrequisitos#curl)
+        2. [Docker](https://github.com/antonioalfa22/Fabric-Network/wiki/Prerrequisitos#docker)
+        3. [Docker-Compose](https://github.com/antonioalfa22/Fabric-Network/wiki/Prerrequisitos#docker-compose)
+        4. [Go](https://github.com/antonioalfa22/Fabric-Network/wiki/Prerrequisitos#docker-compose)
+        5. [Git](https://github.com/antonioalfa22/Fabric-Network/wiki/Prerrequisitos#git)
+        6. [Node & npm](https://github.com/antonioalfa22/Fabric-Network/wiki/Prerrequisitos#node--npm)
+    2. [Preparar entorno](https://github.com/antonioalfa22/Fabric-Network/wiki/Prerrequisitos#preparar-entorno)
+        1. [Clonar repositorio](https://github.com/antonioalfa22/Fabric-Network/wiki/Prerrequisitos#clonar-repositorio)
+        2. [Cambiar hostnames](https://github.com/antonioalfa22/Fabric-Network/wiki/Prerrequisitos#clonar-repositorio)
+        3. [Añadir binarios al path](https://github.com/antonioalfa22/Fabric-Network/wiki/Prerrequisitos#clonar-repositorio)
 
-- [1.- Prerrequisitos:](http://10.250.5.104/antoniopaya/hf-demo/wikis/1.-Prerrequisitos)
-    - [1.1 .- Docker y Docker-Compose](http://10.250.5.104/antoniopaya/hf-demo/wikis/1.-Prerrequisitos#11-docker-y-docker-compose)
-    - [1.2 .- Go](http://10.250.5.104/antoniopaya/hf-demo/wikis/1.-Prerrequisitos#11-docker-y-docker-compose)
-    - [1.3 .- NodeJS Runtime y NPM](http://10.250.5.104/antoniopaya/hf-demo/wikis/1.-Prerrequisitos#13-nodejs-runtime-y-npm)
-    - [1.4 .- Clonar repo](http://10.250.5.104/antoniopaya/hf-demo/wikis/1.-Prerrequisitos#14-clonar-repositorio)
-- [2.- Descripción de los ficheros:](http://10.250.5.104/antoniopaya/hf-demo/wikis/2.-Descripci%C3%B3n-de-los-ficheros)
-- [3.- Ejecución:](http://10.250.5.104/antoniopaya/hf-demo/wikis/3.-Ejecuci%C3%B3n)
-- [4.- Crear canal, unir organizaciones e instanciar chaincode:](http://10.250.5.104/antoniopaya/hf-demo/wikis/4.-Crear-canal,-unir-organizaciones-e-instanciar-chaincode:)
-- [5.- Añadir usuarios:](http://10.250.5.104/antoniopaya/hf-demo/wikis/5.-A%C3%B1adir-usuarios)
+## Descripción

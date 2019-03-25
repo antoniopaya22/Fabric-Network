@@ -1,0 +1,57 @@
+name: "asturias Client"
+version: "1.0"
+
+client:
+  organization: asturias
+  credentialStore:
+    path: "./hfc-key-store/asturias"
+    cryptoStore:
+      path: "./hfc-key-store/asturias"
+      
+channels:
+  datoschannel:
+    orderers:
+      - orderer.arcelormittal.com
+    peers:
+      peer0.asturias.arcelormittal.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+      peer0.brasil.arcelormittal.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+      peer0.chicago.arcelormittal.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+
+organizations:
+  asturias:
+    mspid: asturiasMSP
+    peers:
+      - peer0.asturias.arcelormittal.com
+    certificateAuthorities:
+      - ca.asturias.arcelormittal.com
+    adminPrivateKey:
+      path: crypto-config/peerOrganizations/asturias.arcelormittal.com/users/Admin@asturias.arcelormittal.com/msp/keystore/CA1_PRIVATE_KEY
+    signedCert:
+      path: crypto-config/peerOrganizations/asturias.arcelormittal.com/users/Admin@asturias.arcelormittal.com/msp/signcerts/Admin@asturias.arcelormittal.com-cert.pem
+
+peers:
+  peer0.asturias.arcelormittal.com:
+    url: grpcs://localhost:7051
+    eventUrl: grpcs://localhost:7053
+
+certificateAuthorities:
+  ca.asturias.arcelormittal.com:
+    url: http://localhost:7054
+    httpOptions:
+      verify: false
+    registrar:
+      - enrollId: admin
+        enrollSecret: adminpw
+    caName: ca.asturias.arcelormittal.com

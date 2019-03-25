@@ -1,0 +1,33 @@
+
+OrdererOrgs:
+
+  - Name: Orderer
+    Domain: arcelormittal.com
+    Specs:
+      - Hostname: orderer
+
+PeerOrgs:
+
+  - Name: asturias
+    Domain: asturias.arcelormittal.com
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+    Users:
+      Count: 1
+
+  - Name: brasil
+    Domain: brasil.arcelormittal.com
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+    Users:
+      Count: 1
+
+  - Name: chicago
+    Domain: chicago.arcelormittal.com
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+    Users:
+      Count: 1

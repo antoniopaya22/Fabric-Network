@@ -1,0 +1,57 @@
+name: "chicago Client"
+version: "1.0"
+
+client:
+  organization: chicago
+  credentialStore:
+    path: "./hfc-key-store/chicago"
+    cryptoStore:
+      path: "./hfc-key-store/chicago"
+      
+channels:
+  datoschannel:
+    orderers:
+      - orderer.arcelormittal.com
+    peers:
+      peer0.asturias.arcelormittal.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+      peer0.brasil.arcelormittal.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+      peer0.chicago.arcelormittal.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+
+organizations:
+  chicago:
+    mspid: chicagoMSP
+    peers:
+      - peer0.chicago.arcelormittal.com
+    certificateAuthorities:
+      - ca.chicago.arcelormittal.com
+    adminPrivateKey:
+      path: crypto-config/peerOrganizations/chicago.arcelormittal.com/users/Admin@chicago.arcelormittal.com/msp/keystore/CA3_PRIVATE_KEY
+    signedCert:
+      path: crypto-config/peerOrganizations/chicago.arcelormittal.com/users/Admin@chicago.arcelormittal.com/msp/signcerts/Admin@chicago.arcelormittal.com-cert.pem
+
+peers:
+  peer0.chicago.arcelormittal.com:
+    url: grpcs://localhost:7051
+    eventUrl: grpcs://localhost:7053
+
+certificateAuthorities:
+  ca.chicago.arcelormittal.com:
+    url: http://localhost:7054
+    httpOptions:
+      verify: false
+    registrar:
+      - enrollId: admin
+        enrollSecret: adminpw
+    caName: ca.chicago.arcelormittal.com

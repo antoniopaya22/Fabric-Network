@@ -1,0 +1,45 @@
+version: '3.4'
+
+volumes:
+  orderer.arcelormittal.com:
+  
+networks:
+  hf:
+    external:
+      name: fabric
+
+services:
+  orderer:
+    container_name: orderer
+    image: hyperledger/fabric-orderer
+    environment:
+      - ORDERER_GENERAL_LOGLEVEL=DEBUG
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=/var/hyperledger/orderer/orderer.genesis.block
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: orderer
+    volumes:
+    - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+    - ./crypto-config/ordererOrganizations/arcelormittal.com/orderers/orderer.arcelormittal.com/msp:/var/hyperledger/orderer/msp
+    - ./crypto-config/ordererOrganizations/arcelormittal.com/orderers/orderer.arcelormittal.com/tls/:/var/hyperledger/orderer/tls
+    - orderer.arcelormittal.com:/var/hyperledger/production/orderer
+    deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+              condition: on-failure
+            placement:
+                constraints:
+                    - node.hostname == asturias
+
+    ports:
+      - published: 7050
+        target: 7050
+        mode: host
+    networks:
+      hf:
+        aliases:
+          - orderer.arcelormittal.com

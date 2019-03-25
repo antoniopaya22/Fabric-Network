@@ -1,0 +1,99 @@
+
+---
+
+Organizations:
+
+    - &OrdererOrg
+        Name: OrdererOrg
+        ID: OrdererMSP
+        MSPDir: crypto-config/ordererOrganizations/arcelormittal.com/msp
+
+    - &asturias
+        Name: asturiasMSP
+        ID: asturiasMSP
+        MSPDir: crypto-config/peerOrganizations/asturias.arcelormittal.com/msp
+        AnchorPeers:
+            - Host: peer0.asturias.arcelormittal.com
+              Port: 7051
+
+    - &brasil
+        Name: brasilMSP
+        ID: brasilMSP
+        MSPDir: crypto-config/peerOrganizations/brasil.arcelormittal.com/msp
+        AnchorPeers:
+            - Host: peer0.brasil.arcelormittal.com
+              Port: 7051
+
+    - &chicago
+        Name: chicagoMSP
+        ID: chicagoMSP
+        MSPDir: crypto-config/peerOrganizations/chicago.arcelormittal.com/msp
+        AnchorPeers:
+            - Host: peer0.chicago.arcelormittal.com
+              Port: 7051
+
+
+Orderer: &OrdererDefaults
+
+    # Tipos disponibles:  "solo" o "kafka", "solo" para debug
+    OrdererType: solo
+
+    Addresses:
+        - orderer.arcelormittal.com:7050
+
+    BatchTimeout: 2s
+
+    BatchSize:
+        MaxMessageCount: 10
+        AbsoluteMaxBytes: 99 MB
+        PreferredMaxBytes: 512 KB
+
+    Kafka:
+        Brokers:
+            - 127.0.0.1:9092
+
+    Organizations:
+
+
+Application: &ApplicationDefaults
+
+    Organizations:
+
+Capabilities:
+
+    Global: &ChannelCapabilities
+        V1_1: true
+
+    Orderer: &OrdererCapabilities
+        V1_1: true
+
+    Application: &ApplicationCapabilities
+        V1_1: true
+
+Profiles:
+
+    DatosOrdererGenesis:
+        Capabilities:
+            <<: *ChannelCapabilities
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *OrdererOrg
+            Capabilities:
+                <<: *OrdererCapabilities
+        Consortiums:
+            DatosConsortium:
+                Organizations:
+                    - *asturias
+                    - *brasil
+                    - *chicago
+    datoschannel:
+        Consortium: DatosConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *asturias
+                - *brasil
+                - *chicago
+            Capabilities:
+                <<: *ApplicationCapabilities

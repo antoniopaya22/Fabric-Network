@@ -1,10 +1,10 @@
 {
-  "name": "HF3D-BACKEND",
+  "name": "Fabric-Network",
   "version": "1.0.0",
   "description": "antonio Hyperledger Fabric 3D Network",
   "repository": {
     "type": "git",
-    "url": "git+http://10.250.5.104/antoniopaya/hf3d-backend.git"
+    "url": "git+https://github.com/antonioalfa22/Fabric-Network.git"
   },
   "keywords": [
     "Fabric",
@@ -18,9 +18,9 @@
   "author": "Antonio Paya Gonzalez",
   "license": "MIT",
   "bugs": {
-    "url": "http://10.250.5.104/antoniopaya/hf3d-backend/issues"
+    "url": "https://github.com/antonioalfa22/Fabric-Network/issues"
   },
-  "homepage": "http://10.250.5.104/antoniopaya/hf3d-backend/wikis/HF-Demo",
+  "homepage": "https://github.com/antonioalfa22/Fabric-Network/wiki",
   "dependencies": {
     "body-parser": "^1.18.3",
     "ejs": "latest",

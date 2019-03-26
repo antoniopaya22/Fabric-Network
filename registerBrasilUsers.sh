@@ -23,7 +23,7 @@ function reemplazarClaves(){
 
     cp ./users/ConnectionProfileBrasilTemplate.yml ./users/ConnectionProfileBrasil.yml
 
-    cd crypto-config/peerOrganizations/brasil.arcelormittal.com/users/Admin@brasil.arcelormittal.com/msp/keystore/
+    cd crypto-config/peerOrganizations/brasil.antonio.com/users/Admin@brasil.antonio.com/msp/keystore/
     PRIV_KEY=$(ls *_sk)
     cd $DIR
     sed $OPTS "s/CA2_PRIVATE_KEY/${PRIV_KEY}/g" ./users/ConnectionProfileBrasil.yml

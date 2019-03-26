@@ -1,7 +1,7 @@
 {
   "name": "HF3D-BACKEND",
   "version": "1.0.0",
-  "description": "ArcelorMittal Hyperledger Fabric 3D Network",
+  "description": "antonio Hyperledger Fabric 3D Network",
   "repository": {
     "type": "git",
     "url": "git+http://10.250.5.104/antoniopaya/hf3d-backend.git"
@@ -11,7 +11,7 @@
     "Hyperledger",
     "Fabric",
     "HF3D-Backend",
-    "ArcelorMittal",
+    "antonio",
     "NodeJS",
     "app"
   ],

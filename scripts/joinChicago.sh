@@ -1,7 +1,7 @@
 CORE_PEER_LOCALMSPID="chicagoMSP"
-ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/arcelormittal.com/orderers/orderer.arcelormittal.com/msp/tlscacerts/tlsca.arcelormittal.com-cert.pem
-CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/chicago.arcelormittal.com/users/Admin@chicago.arcelormittal.com/msp
-CORE_PEER_ADDRESS=peer0.chicago.arcelormittal.com:7051
+ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/antonio.com/orderers/orderer.antonio.com/msp/tlscacerts/tlsca.antonio.com-cert.pem
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/chicago.antonio.com/users/Admin@chicago.antonio.com/msp
+CORE_PEER_ADDRESS=peer0.chicago.antonio.com:7051
 CHANNEL_NAME=datoschannel
 
 peer channel join -b $CHANNEL_NAME.block >&log.txt

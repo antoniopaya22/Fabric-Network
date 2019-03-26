@@ -1,7 +1,7 @@
 version: '3.4'
 
 volumes:
-  peer0.chicago.arcelormittal.com:
+  peer0.chicago.antonio.com:
   
 networks:
   hf:
@@ -13,12 +13,12 @@ services:
     image: hyperledger/fabric-ca
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-      - FABRIC_CA_SERVER_CA_NAME=ca.chicago.arcelormittal.com
-      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.chicago.arcelormittal.com-cert.pem
+      - FABRIC_CA_SERVER_CA_NAME=ca.chicago.antonio.com
+      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.chicago.antonio.com-cert.pem
       - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA_PRIVATE_KEY
-    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.chicago.arcelormittal.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA_PRIVATE_KEY  -b admin:adminpw -d'
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.chicago.antonio.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA_PRIVATE_KEY  -b admin:adminpw -d'
     volumes:
-      - ./crypto-config/peerOrganizations/chicago.arcelormittal.com/ca/:/etc/hyperledger/fabric-ca-server-config
+      - ./crypto-config/peerOrganizations/chicago.antonio.com/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: caChicago
     deploy:
             mode: replicated
@@ -36,7 +36,7 @@ services:
     networks:
       hf:
         aliases:
-          - ca.chicago.arcelormittal.com
+          - ca.chicago.antonio.com
 
   peer0chicago:
     container_name: peer0chicago
@@ -50,18 +50,18 @@ services:
       - CORE_PEER_GOSSIP_USELEADERELECTION=true
       - CORE_PEER_GOSSIP_ORGLEADER=false
       - CORE_PEER_PROFILE_ENABLED=true
-      - CORE_PEER_ID=peer0.chicago.arcelormittal.com
-      - CORE_PEER_ADDRESS=peer0.chicago.arcelormittal.com:7051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.chicago.arcelormittal.com:7051
+      - CORE_PEER_ID=peer0.chicago.antonio.com
+      - CORE_PEER_ADDRESS=peer0.chicago.antonio.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.chicago.antonio.com:7051
       - CORE_PEER_LOCALMSPID=chicagoMSP
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     volumes:
         - /var/run/:/host/var/run/
-        - ./crypto-config/peerOrganizations/chicago.arcelormittal.com/peers/peer0.chicago.arcelormittal.com/msp:/etc/hyperledger/fabric/msp
-        - ./crypto-config/peerOrganizations/chicago.arcelormittal.com/peers/peer0.chicago.arcelormittal.com/tls:/etc/hyperledger/fabric/tls
-        #- ./crypto-config/peerOrganizations/chicago.arcelormittal.com/peers/peer0.chicago.arcelormittal.com/ca:/etc/hyperledger/fabric/ca
-        - peer0.chicago.arcelormittal.com:/var/hyperledger/production
+        - ./crypto-config/peerOrganizations/chicago.antonio.com/peers/peer0.chicago.antonio.com/msp:/etc/hyperledger/fabric/msp
+        - ./crypto-config/peerOrganizations/chicago.antonio.com/peers/peer0.chicago.antonio.com/tls:/etc/hyperledger/fabric/tls
+        #- ./crypto-config/peerOrganizations/chicago.antonio.com/peers/peer0.chicago.antonio.com/ca:/etc/hyperledger/fabric/ca
+        - peer0.chicago.antonio.com:/var/hyperledger/production
     deploy:
             mode: replicated
             replicas: 1
@@ -80,7 +80,7 @@ services:
     networks:
       hf:
         aliases:
-          - peer0.chicago.arcelormittal.com
+          - peer0.chicago.antonio.com
            
 
   chicagocli:
@@ -102,9 +102,9 @@ services:
       - CORE_LOGGING_LEVEL=DEBUG
       #- CORE_LOGGING_LEVEL=INFO
       - CORE_PEER_ID=cli
-      - CORE_PEER_ADDRESS=peer0.chicago.arcelormittal.com:7051
+      - CORE_PEER_ADDRESS=peer0.chicago.antonio.com:7051
       - CORE_PEER_LOCALMSPID=chicagoMSP
-      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/chicago.arcelormittal.com/users/Admin@chicago.arcelormittal.com/msp
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/chicago.antonio.com/users/Admin@chicago.antonio.com/msp
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: /bin/bash
     volumes:

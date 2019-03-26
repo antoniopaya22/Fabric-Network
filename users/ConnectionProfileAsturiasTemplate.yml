@@ -11,19 +11,19 @@ client:
 channels:
   datoschannel:
     orderers:
-      - orderer.arcelormittal.com
+      - orderer.antonio.com
     peers:
-      peer0.asturias.arcelormittal.com:
+      peer0.asturias.antonio.com:
         endorsingPeer: true
         chaincodeQuery: true
         ledgerQuery: true
         eventSource: true
-      peer0.brasil.arcelormittal.com:
+      peer0.brasil.antonio.com:
         endorsingPeer: true
         chaincodeQuery: true
         ledgerQuery: true
         eventSource: true
-      peer0.chicago.arcelormittal.com:
+      peer0.chicago.antonio.com:
         endorsingPeer: true
         chaincodeQuery: true
         ledgerQuery: true
@@ -33,25 +33,25 @@ organizations:
   asturias:
     mspid: asturiasMSP
     peers:
-      - peer0.asturias.arcelormittal.com
+      - peer0.asturias.antonio.com
     certificateAuthorities:
-      - ca.asturias.arcelormittal.com
+      - ca.asturias.antonio.com
     adminPrivateKey:
-      path: crypto-config/peerOrganizations/asturias.arcelormittal.com/users/Admin@asturias.arcelormittal.com/msp/keystore/CA1_PRIVATE_KEY
+      path: crypto-config/peerOrganizations/asturias.antonio.com/users/Admin@asturias.antonio.com/msp/keystore/CA1_PRIVATE_KEY
     signedCert:
-      path: crypto-config/peerOrganizations/asturias.arcelormittal.com/users/Admin@asturias.arcelormittal.com/msp/signcerts/Admin@asturias.arcelormittal.com-cert.pem
+      path: crypto-config/peerOrganizations/asturias.antonio.com/users/Admin@asturias.antonio.com/msp/signcerts/Admin@asturias.antonio.com-cert.pem
 
 peers:
-  peer0.asturias.arcelormittal.com:
+  peer0.asturias.antonio.com:
     url: grpcs://localhost:7051
     eventUrl: grpcs://localhost:7053
 
 certificateAuthorities:
-  ca.asturias.arcelormittal.com:
+  ca.asturias.antonio.com:
     url: http://localhost:7054
     httpOptions:
       verify: false
     registrar:
       - enrollId: admin
         enrollSecret: adminpw
-    caName: ca.asturias.arcelormittal.com
+    caName: ca.asturias.antonio.com

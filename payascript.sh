@@ -105,17 +105,17 @@ function remplazarClavePrivada () {
     cp docker-compose-template-chicago.yaml docker-compose-chicago.yaml
     CURRENT_DIR=$PWD
     
-    cd crypto-config/peerOrganizations/asturias.arcelormittal.com/ca/
+    cd crypto-config/peerOrganizations/asturias.antonio.com/ca/
     PRIV_KEY=$(ls *_sk)
     cd $CURRENT_DIR
     sed $OPTS "s/CA_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose-asturias.yaml
 
-    cd crypto-config/peerOrganizations/brasil.arcelormittal.com/ca/
+    cd crypto-config/peerOrganizations/brasil.antonio.com/ca/
     PRIV_KEY2=$(ls *_sk)
     cd $CURRENT_DIR
     sed $OPTS "s/CA_PRIVATE_KEY/${PRIV_KEY2}/g" docker-compose-brasil.yaml
 
-    cd crypto-config/peerOrganizations/chicago.arcelormittal.com/ca/
+    cd crypto-config/peerOrganizations/chicago.antonio.com/ca/
     PRIV_KEY3=$(ls *_sk)
     cd $CURRENT_DIR
     sed $OPTS "s/CA_PRIVATE_KEY/${PRIV_KEY3}/g" docker-compose-chicago.yaml

@@ -1,7 +1,7 @@
 version: '3.4'
 
 volumes:
-  peer0.asturias.arcelormittal.com:
+  peer0.asturias.antonio.com:
   
 networks:
   hf:
@@ -13,12 +13,12 @@ services:
     image: hyperledger/fabric-ca
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-      - FABRIC_CA_SERVER_CA_NAME=ca.asturias.arcelormittal.com
-      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.asturias.arcelormittal.com-cert.pem
+      - FABRIC_CA_SERVER_CA_NAME=ca.asturias.antonio.com
+      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.asturias.antonio.com-cert.pem
       - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA_PRIVATE_KEY
-    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.asturias.arcelormittal.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA_PRIVATE_KEY  -b admin:adminpw -d'
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.asturias.antonio.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA_PRIVATE_KEY  -b admin:adminpw -d'
     volumes:
-      - ./crypto-config/peerOrganizations/asturias.arcelormittal.com/ca/:/etc/hyperledger/fabric-ca-server-config
+      - ./crypto-config/peerOrganizations/asturias.antonio.com/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: caAsturias
     deploy:
             mode: replicated
@@ -35,7 +35,7 @@ services:
     networks:
       hf:
         aliases:
-          - ca.asturias.arcelormittal.com
+          - ca.asturias.antonio.com
 
   peer0asturias:
     container_name: peer0asturias
@@ -49,19 +49,19 @@ services:
       - CORE_PEER_GOSSIP_USELEADERELECTION=true
       - CORE_PEER_GOSSIP_ORGLEADER=false
       - CORE_PEER_PROFILE_ENABLED=true
-      - CORE_PEER_ID=peer0.asturias.arcelormittal.com
-      - CORE_PEER_ADDRESS=peer0.asturias.arcelormittal.com:7051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.asturias.arcelormittal.com:7051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.asturias.arcelormittal.com:7051
+      - CORE_PEER_ID=peer0.asturias.antonio.com
+      - CORE_PEER_ADDRESS=peer0.asturias.antonio.com:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.asturias.antonio.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.asturias.antonio.com:7051
       - CORE_PEER_LOCALMSPID=asturiasMSP
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     volumes:
         - /var/run/:/host/var/run/
-        - ./crypto-config/peerOrganizations/asturias.arcelormittal.com/peers/peer0.asturias.arcelormittal.com/msp:/etc/hyperledger/fabric/msp
-        - ./crypto-config/peerOrganizations/asturias.arcelormittal.com/peers/peer0.asturias.arcelormittal.com/tls:/etc/hyperledger/fabric/tls
-        #- ./crypto-config/peerOrganizations/asturias.arcelormittal.com/peers/peer0.asturias.arcelormittal.com/ca:/etc/hyperledger/fabric/ca
-        - peer0.asturias.arcelormittal.com:/var/hyperledger/production
+        - ./crypto-config/peerOrganizations/asturias.antonio.com/peers/peer0.asturias.antonio.com/msp:/etc/hyperledger/fabric/msp
+        - ./crypto-config/peerOrganizations/asturias.antonio.com/peers/peer0.asturias.antonio.com/tls:/etc/hyperledger/fabric/tls
+        #- ./crypto-config/peerOrganizations/asturias.antonio.com/peers/peer0.asturias.antonio.com/ca:/etc/hyperledger/fabric/ca
+        - peer0.asturias.antonio.com:/var/hyperledger/production
     deploy:
             mode: replicated
             replicas: 1
@@ -80,7 +80,7 @@ services:
     networks:
       hf:
         aliases:
-          - peer0.asturias.arcelormittal.com
+          - peer0.asturias.antonio.com
            
   asturiascli:
     container_name: asturiascli
@@ -101,9 +101,9 @@ services:
       - CORE_LOGGING_LEVEL=DEBUG
       #- CORE_LOGGING_LEVEL=INFO
       - CORE_PEER_ID=cli
-      - CORE_PEER_ADDRESS=peer0.asturias.arcelormittal.com:7051
+      - CORE_PEER_ADDRESS=peer0.asturias.antonio.com:7051
       - CORE_PEER_LOCALMSPID=asturiasMSP
-      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/asturias.arcelormittal.com/users/Admin@asturias.arcelormittal.com/msp
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/asturias.antonio.com/users/Admin@asturias.antonio.com/msp
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: /bin/bash
     volumes:
@@ -115,4 +115,4 @@ services:
     networks:
       hf:
         aliases:
-          - asturiascli.arcelormittal.com
+          - asturiascli.antonio.com

@@ -6,30 +6,30 @@ Organizations:
     - &OrdererOrg
         Name: OrdererOrg
         ID: OrdererMSP
-        MSPDir: crypto-config/ordererOrganizations/arcelormittal.com/msp
+        MSPDir: crypto-config/ordererOrganizations/antonio.com/msp
 
     - &asturias
         Name: asturiasMSP
         ID: asturiasMSP
-        MSPDir: crypto-config/peerOrganizations/asturias.arcelormittal.com/msp
+        MSPDir: crypto-config/peerOrganizations/asturias.antonio.com/msp
         AnchorPeers:
-            - Host: peer0.asturias.arcelormittal.com
+            - Host: peer0.asturias.antonio.com
               Port: 7051
 
     - &brasil
         Name: brasilMSP
         ID: brasilMSP
-        MSPDir: crypto-config/peerOrganizations/brasil.arcelormittal.com/msp
+        MSPDir: crypto-config/peerOrganizations/brasil.antonio.com/msp
         AnchorPeers:
-            - Host: peer0.brasil.arcelormittal.com
+            - Host: peer0.brasil.antonio.com
               Port: 7051
 
     - &chicago
         Name: chicagoMSP
         ID: chicagoMSP
-        MSPDir: crypto-config/peerOrganizations/chicago.arcelormittal.com/msp
+        MSPDir: crypto-config/peerOrganizations/chicago.antonio.com/msp
         AnchorPeers:
-            - Host: peer0.chicago.arcelormittal.com
+            - Host: peer0.chicago.antonio.com
               Port: 7051
 
 
@@ -39,7 +39,7 @@ Orderer: &OrdererDefaults
     OrdererType: solo
 
     Addresses:
-        - orderer.arcelormittal.com:7050
+        - orderer.antonio.com:7050
 
     BatchTimeout: 2s
 

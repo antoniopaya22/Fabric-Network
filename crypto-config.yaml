@@ -2,14 +2,14 @@
 OrdererOrgs:
 
   - Name: Orderer
-    Domain: arcelormittal.com
+    Domain: antonio.com
     Specs:
       - Hostname: orderer
 
 PeerOrgs:
 
   - Name: asturias
-    Domain: asturias.arcelormittal.com
+    Domain: asturias.antonio.com
     EnableNodeOUs: true
     Template:
       Count: 1
@@ -17,7 +17,7 @@ PeerOrgs:
       Count: 1
 
   - Name: brasil
-    Domain: brasil.arcelormittal.com
+    Domain: brasil.antonio.com
     EnableNodeOUs: true
     Template:
       Count: 1
@@ -25,7 +25,7 @@ PeerOrgs:
       Count: 1
 
   - Name: chicago
-    Domain: chicago.arcelormittal.com
+    Domain: chicago.antonio.com
     EnableNodeOUs: true
     Template:
       Count: 1

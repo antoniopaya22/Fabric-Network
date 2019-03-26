@@ -11,19 +11,19 @@ client:
 channels:
   datoschannel:
     orderers:
-      - orderer.arcelormittal.com
+      - orderer.antonio.com
     peers:
-      peer0.asturias.arcelormittal.com:
+      peer0.asturias.antonio.com:
         endorsingPeer: true
         chaincodeQuery: true
         ledgerQuery: true
         eventSource: true
-      peer0.brasil.arcelormittal.com:
+      peer0.brasil.antonio.com:
         endorsingPeer: true
         chaincodeQuery: true
         ledgerQuery: true
         eventSource: true
-      peer0.chicago.arcelormittal.com:
+      peer0.chicago.antonio.com:
         endorsingPeer: true
         chaincodeQuery: true
         ledgerQuery: true
@@ -33,25 +33,25 @@ organizations:
   chicago:
     mspid: chicagoMSP
     peers:
-      - peer0.chicago.arcelormittal.com
+      - peer0.chicago.antonio.com
     certificateAuthorities:
-      - ca.chicago.arcelormittal.com
+      - ca.chicago.antonio.com
     adminPrivateKey:
-      path: crypto-config/peerOrganizations/chicago.arcelormittal.com/users/Admin@chicago.arcelormittal.com/msp/keystore/CA3_PRIVATE_KEY
+      path: crypto-config/peerOrganizations/chicago.antonio.com/users/Admin@chicago.antonio.com/msp/keystore/CA3_PRIVATE_KEY
     signedCert:
-      path: crypto-config/peerOrganizations/chicago.arcelormittal.com/users/Admin@chicago.arcelormittal.com/msp/signcerts/Admin@chicago.arcelormittal.com-cert.pem
+      path: crypto-config/peerOrganizations/chicago.antonio.com/users/Admin@chicago.antonio.com/msp/signcerts/Admin@chicago.antonio.com-cert.pem
 
 peers:
-  peer0.chicago.arcelormittal.com:
+  peer0.chicago.antonio.com:
     url: grpcs://localhost:7051
     eventUrl: grpcs://localhost:7053
 
 certificateAuthorities:
-  ca.chicago.arcelormittal.com:
+  ca.chicago.antonio.com:
     url: http://localhost:7054
     httpOptions:
       verify: false
     registrar:
       - enrollId: admin
         enrollSecret: adminpw
-    caName: ca.chicago.arcelormittal.com
+    caName: ca.chicago.antonio.com

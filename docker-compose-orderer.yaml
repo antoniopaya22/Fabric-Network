@@ -1,7 +1,7 @@
 version: '3.4'
 
 volumes:
-  orderer.arcelormittal.com:
+  orderer.antonio.com:
   
 networks:
   hf:
@@ -23,9 +23,9 @@ services:
     command: orderer
     volumes:
     - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-    - ./crypto-config/ordererOrganizations/arcelormittal.com/orderers/orderer.arcelormittal.com/msp:/var/hyperledger/orderer/msp
-    - ./crypto-config/ordererOrganizations/arcelormittal.com/orderers/orderer.arcelormittal.com/tls/:/var/hyperledger/orderer/tls
-    - orderer.arcelormittal.com:/var/hyperledger/production/orderer
+    - ./crypto-config/ordererOrganizations/antonio.com/orderers/orderer.antonio.com/msp:/var/hyperledger/orderer/msp
+    - ./crypto-config/ordererOrganizations/antonio.com/orderers/orderer.antonio.com/tls/:/var/hyperledger/orderer/tls
+    - orderer.antonio.com:/var/hyperledger/production/orderer
     deploy:
             mode: replicated
             replicas: 1
@@ -42,4 +42,4 @@ services:
     networks:
       hf:
         aliases:
-          - orderer.arcelormittal.com
+          - orderer.antonio.com

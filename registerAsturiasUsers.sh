@@ -24,7 +24,7 @@ function reemplazarClaves(){
 
     cp ./users/ConnectionProfileAsturiasTemplate.yml ./users/ConnectionProfileAsturias.yml
 
-    cd crypto-config/peerOrganizations/asturias.antonio.com/users/Admin@asturias.arcelormittal.com/msp/keystore/
+    cd crypto-config/peerOrganizations/asturias.antonio.com/users/Admin@asturias.antonio.com/msp/keystore/
     PRIV_KEY=$(ls *_sk)
     cd $DIR
     sed $OPTS "s/CA1_PRIVATE_KEY/${PRIV_KEY}/g" ./users/ConnectionProfileAsturias.yml

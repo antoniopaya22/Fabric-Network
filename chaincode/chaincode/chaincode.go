@@ -56,7 +56,9 @@
 		 return s.updateDato(APIstub, args)
 	 } else if function == "getLastNum" {
 		return s.getLastNum(APIstub)
-	 } 
+	 } else if funcion == "queryDatoCouchDB" {
+		 return s.queryDatoCouchDB(APIstub, args)
+	 }
  
 	 return shim.Error("Nombre de funcion del SmartContract invalido o inexistente.")
  }
@@ -241,14 +243,71 @@
 
 	return shim.Success(buffer.Bytes())
 }
+
+func (s *SmartContract) queryDatoCouchDB(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+	if len(args) != 1 {
+		return shim.Error("Numero incorrecto de argumentos, se esperaba 1")
+	}
+	queryString := args[0]
+	queryResults, err := getQueryResultForQueryString(stub, queryString)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	return shim.Success(queryResults)
+}
  
- // Esta funcion solo es relevante para pruebas unitarias.
- func main() {
- 
-	 // Create a new Smart Contract
-	 err := shim.Start(new(SmartContract))
-	 if err != nil {
-		 fmt.Printf("Error al crear el Smart Contract: %s", err)
-	 }
+func getQueryResultForQueryString(stub shim.ChaincodeStubInterface, queryString string) ([]byte, error) {
+
+	resultsIterator, err := stub.GetQueryResult(queryString)
+	if err != nil {
+		return nil, err
+	}
+	defer resultsIterator.Close()
+
+	buffer, err := constructQueryResponseFromIterator(resultsIterator)
+	if err != nil {
+		return nil, err
+	}
+
+	fmt.Printf("- getQueryResultForQueryString queryResult:\n%s\n", buffer.String())
+	return buffer.Bytes(), nil
+}
+
+func constructQueryResponseFromIterator(resultsIterator shim.StateQueryIteratorInterface) (*bytes.Buffer, error) {
+	var buffer bytes.Buffer
+	buffer.WriteString("[")
+
+	bArrayMemberAlreadyWritten := false
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
+		if err != nil {
+			return nil, err
+		}
+		if bArrayMemberAlreadyWritten == true {
+			buffer.WriteString(",")
+		}
+		buffer.WriteString("{\"Key\":")
+		buffer.WriteString("\"")
+		buffer.WriteString(queryResponse.Key)
+		buffer.WriteString("\"")
+
+		buffer.WriteString(", \"Record\":")
+		buffer.WriteString(string(queryResponse.Value))
+		buffer.WriteString("}")
+		bArrayMemberAlreadyWritten = true
+	}
+	buffer.WriteString("]")
+
+	return &buffer, nil
+}
+
+
+// Esta funcion solo es relevante para pruebas unitarias.
+func main() {
+	// Create a new Smart Contract
+	err := shim.Start(new(SmartContract))
+	if err != nil {
+		fmt.Printf("Error al crear el Smart Contract: %s", err)
+	}
  }
  

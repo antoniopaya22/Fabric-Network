@@ -54,6 +54,11 @@ services:
       - CORE_PEER_ADDRESS=peer0.brasil.antonio.com:7051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.brasil.antonio.com:7051
       - CORE_PEER_LOCALMSPID=brasilMSP
+      # COUCHDB
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb_brasil0:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     volumes:
@@ -81,7 +86,31 @@ services:
       hf:
         aliases:
           - peer0.brasil.antonio.com
-           
+    depends_on:
+      - couchdb_brasil0
+
+  couchdb_brasil0:
+    container_name: couchdb_brasil0
+    image: hyperledger/fabric-couchdb
+    environment:
+      - COUCHDB_USER=
+      - COUCHDB_PASSWORD=
+    deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+              condition: on-failure
+            placement:
+                constraints:
+                    - node.hostname == brasil
+    ports:
+            - published: 5984
+              target: 5984
+              mode: host
+    networks:
+      hf:
+        aliases:
+          - couchdb_brasil0.brasil.arcelormittal.com
 
   brasilcli:
     container_name: brasilcli

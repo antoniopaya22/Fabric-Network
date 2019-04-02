@@ -90,6 +90,9 @@ function downloadDockerImages(){
         docker pull hyperledger/fabric-$IMAGES:$FABRIC_TAG
         docker tag hyperledger/fabric-$IMAGES:$FABRIC_TAG hyperledger/fabric-$IMAGES
     done
+    echo "==> FABRIC IMAGE: couchdb"
+    echo
+    docker pull hyperledger/fabric-couchdb
 }
 
 # remplazarClavePrivada -> Crea el archivo docker-compose.yaml

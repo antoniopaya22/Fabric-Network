@@ -15,8 +15,8 @@ services:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca.asturias.antonio.com
       - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.asturias.antonio.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/40b53c7625df20d2f6d8e19e31e8f69c8403b5b834163dd66221fd794d95c79f_sk
-    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.asturias.antonio.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/40b53c7625df20d2f6d8e19e31e8f69c8403b5b834163dd66221fd794d95c79f_sk  -b admin:adminpw -d'
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/e236f2a85bf59ab665d20aad9564af3c1b588ff675b6f99b33db03e236133084_sk
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.asturias.antonio.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/e236f2a85bf59ab665d20aad9564af3c1b588ff675b6f99b33db03e236133084_sk  -b admin:adminpw -d'
     volumes:
       - ./crypto-config/peerOrganizations/asturias.antonio.com/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: caAsturias

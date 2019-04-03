@@ -15,8 +15,8 @@ services:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca.brasil.antonio.com
       - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.brasil.antonio.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/28d84efc51e24b4a128fa5e709cee5789c5e01ae14516aa1254464289099ae0b_sk
-    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.brasil.antonio.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/28d84efc51e24b4a128fa5e709cee5789c5e01ae14516aa1254464289099ae0b_sk  -b admin:adminpw -d'
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/bcb1ab0442eb7cba44f81c7ad9f9e39318de98d06f4aa027455098003fc0db46_sk
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.brasil.antonio.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/bcb1ab0442eb7cba44f81c7ad9f9e39318de98d06f4aa027455098003fc0db46_sk  -b admin:adminpw -d'
     volumes:
       - ./crypto-config/peerOrganizations/brasil.antonio.com/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: caBrasil

@@ -244,7 +244,7 @@
 	return shim.Success(buffer.Bytes())
 }
 
-func (s *SmartContract) queryDatoCouchDB(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+func (s *SmartContract) queryDatoCouchDB(stub shim.ChaincodeStubInterface, args []string) sc.Response {
 	if len(args) != 1 {
 		return shim.Error("Numero incorrecto de argumentos, se esperaba 1")
 	}

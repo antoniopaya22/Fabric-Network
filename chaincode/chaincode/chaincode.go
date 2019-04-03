@@ -56,7 +56,7 @@
 		 return s.updateDato(APIstub, args)
 	 } else if function == "getLastNum" {
 		return s.getLastNum(APIstub)
-	 } else if funcion == "queryDatoCouchDB" {
+	 } else if function == "queryDatoCouchDB" {
 		 return s.queryDatoCouchDB(APIstub, args)
 	 }
  

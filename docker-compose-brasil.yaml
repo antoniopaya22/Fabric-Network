@@ -1,0 +1,146 @@
+version: '3.4'
+
+volumes:
+  peer0.brasil.antonio.com:
+  
+networks:
+  hf:
+    external:
+      name: fabric
+    
+services:
+  caBrasil:
+    image: hyperledger/fabric-ca
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca.brasil.antonio.com
+      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.brasil.antonio.com-cert.pem
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/28d84efc51e24b4a128fa5e709cee5789c5e01ae14516aa1254464289099ae0b_sk
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.brasil.antonio.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/28d84efc51e24b4a128fa5e709cee5789c5e01ae14516aa1254464289099ae0b_sk  -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/brasil.antonio.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: caBrasil
+    deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+              condition: on-failure
+            placement:
+                constraints:
+                    - node.hostname == brasil
+
+    ports:
+     - published: 7054
+       target: 7054
+       mode: host
+    networks:
+      hf:
+        aliases:
+          - ca.brasil.antonio.com
+
+  peer0Brasil:
+    container_name: peer0brasil
+    image: hyperledger/fabric-peer
+    environment:
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=fabric
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      #- CORE_LOGGING_LEVEL=INFO
+      - CORE_LOGGING_LEVEL=DEBUG
+      - CORE_PEER_GOSSIP_USELEADERELECTION=true
+      - CORE_PEER_GOSSIP_ORGLEADER=false
+      - CORE_PEER_PROFILE_ENABLED=true
+      - CORE_PEER_ID=peer0.brasil.antonio.com
+      - CORE_PEER_ADDRESS=peer0.brasil.antonio.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.brasil.antonio.com:7051
+      - CORE_PEER_LOCALMSPID=brasilMSP
+      # COUCHDB
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb_brasil0:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./crypto-config/peerOrganizations/brasil.antonio.com/peers/peer0.brasil.antonio.com/msp:/etc/hyperledger/fabric/msp
+        - ./crypto-config/peerOrganizations/brasil.antonio.com/peers/peer0.brasil.antonio.com/tls:/etc/hyperledger/fabric/tls
+        #- ./crypto-config/peerOrganizations/brasil.antonio.com/peers/peer0.brasil.antonio.com/ca:/etc/hyperledger/fabric/ca
+        - peer0.brasil.antonio.com:/var/hyperledger/production
+    deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+              condition: on-failure
+            placement:
+                constraints:
+                    - node.hostname == brasil
+    ports:
+            - published: 11051
+              target: 7051
+              mode: host
+            - published: 11053
+              target: 7053
+              mode: host
+    networks:
+      hf:
+        aliases:
+          - peer0.brasil.antonio.com
+    depends_on:
+      - couchdb_brasil0
+
+  couchdb_brasil0:
+    container_name: couchdb_brasil0
+    image: hyperledger/fabric-couchdb
+    environment:
+      - COUCHDB_USER=
+      - COUCHDB_PASSWORD=
+    deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+              condition: on-failure
+            placement:
+                constraints:
+                    - node.hostname == brasil
+    ports:
+            - published: 5984
+              target: 5984
+              mode: host
+    networks:
+      hf:
+        aliases:
+          - couchdb_brasil0.brasil.arcelormittal.com
+
+  brasilcli:
+    container_name: brasilcli
+    image: hyperledger/fabric-tools
+    tty: true
+    stdin_open: true
+    deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+              condition: on-failure
+            placement:
+                constraints:
+                    - node.hostname == brasil
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_LOGGING_LEVEL=DEBUG
+      #- CORE_LOGGING_LEVEL=INFO
+      - CORE_PEER_ID=cli
+      - CORE_PEER_ADDRESS=peer0.brasil.antonio.com:7051
+      - CORE_PEER_LOCALMSPID=brasilMSP
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/brasil.antonio.com/users/Admin@brasil.antonio.com/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/examples/chaincode/go
+        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    networks:
+      - hf

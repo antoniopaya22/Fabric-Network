@@ -1,0 +1,148 @@
+version: '3.4'
+
+volumes:
+  peer0.asturias.antonio.com:
+  
+networks:
+  hf:
+    external:
+      name: fabric
+    
+services:
+  caAsturias:
+    image: hyperledger/fabric-ca
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca.asturias.antonio.com
+      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.asturias.antonio.com-cert.pem
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/40b53c7625df20d2f6d8e19e31e8f69c8403b5b834163dd66221fd794d95c79f_sk
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.asturias.antonio.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/40b53c7625df20d2f6d8e19e31e8f69c8403b5b834163dd66221fd794d95c79f_sk  -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/asturias.antonio.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: caAsturias
+    deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+              condition: on-failure
+            placement:
+                constraints:
+                    - node.hostname == asturias
+    ports:
+     - published: 7054
+       target: 7054
+       mode: host
+    networks:
+      hf:
+        aliases:
+          - ca.asturias.antonio.com
+
+  peer0asturias:
+    container_name: peer0asturias
+    image: hyperledger/fabric-peer
+    environment:
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=fabric
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      #- CORE_LOGGING_LEVEL=INFO
+      - CORE_LOGGING_LEVEL=DEBUG
+      - CORE_PEER_GOSSIP_USELEADERELECTION=true
+      - CORE_PEER_GOSSIP_ORGLEADER=false
+      - CORE_PEER_PROFILE_ENABLED=true
+      - CORE_PEER_ID=peer0.asturias.antonio.com
+      - CORE_PEER_ADDRESS=peer0.asturias.antonio.com:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.asturias.antonio.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.asturias.antonio.com:7051
+      - CORE_PEER_LOCALMSPID=asturiasMSP
+      # COUCHDB
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb_asturias0:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./crypto-config/peerOrganizations/asturias.antonio.com/peers/peer0.asturias.antonio.com/msp:/etc/hyperledger/fabric/msp
+        - ./crypto-config/peerOrganizations/asturias.antonio.com/peers/peer0.asturias.antonio.com/tls:/etc/hyperledger/fabric/tls
+        #- ./crypto-config/peerOrganizations/asturias.antonio.com/peers/peer0.asturias.antonio.com/ca:/etc/hyperledger/fabric/ca
+        - peer0.asturias.antonio.com:/var/hyperledger/production
+    deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+              condition: on-failure
+            placement:
+                constraints:
+                    - node.hostname == asturias
+    ports:
+            - published: 7051
+              target: 7051
+              mode: host
+            - published: 7053
+              target: 7053
+              mode: host
+    networks:
+      hf:
+        aliases:
+          - peer0.asturias.antonio.com
+    depends_on:
+      - couchdb_asturias0
+
+  couchdb_asturias0:
+    container_name: couchdb_asturias0
+    image: hyperledger/fabric-couchdb
+    environment:
+      - COUCHDB_USER=
+      - COUCHDB_PASSWORD=
+    deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+              condition: on-failure
+            placement:
+                constraints:
+                    - node.hostname == asturias
+    ports:
+            - published: 5984
+              target: 5984
+              mode: host
+    networks:
+      hf:
+        aliases:
+          - couchdb_asturias0.asturias.arcelormittal.com
+           
+  asturiascli:
+    container_name: asturiascli
+    image: hyperledger/fabric-tools
+    tty: true
+    stdin_open: true
+    deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+              condition: on-failure
+            placement:
+                constraints:
+                    - node.hostname == asturias
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_LOGGING_LEVEL=DEBUG
+      #- CORE_LOGGING_LEVEL=INFO
+      - CORE_PEER_ID=cli
+      - CORE_PEER_ADDRESS=peer0.asturias.antonio.com:7051
+      - CORE_PEER_LOCALMSPID=asturiasMSP
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/asturias.antonio.com/users/Admin@asturias.antonio.com/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/examples/chaincode/go
+        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    networks:
+      hf:
+        aliases:
+          - asturiascli.antonio.com

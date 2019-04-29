@@ -110,7 +110,7 @@ services:
     networks:
       hf:
         aliases:
-          - couchdb_chicago0.chicago.arcelormittal.com
+          - couchdb_chicago0.chicago.antonio.com
 
   chicagocli:
     container_name: chicagocli

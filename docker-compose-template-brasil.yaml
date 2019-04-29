@@ -110,7 +110,7 @@ services:
     networks:
       hf:
         aliases:
-          - couchdb_brasil0.brasil.arcelormittal.com
+          - couchdb_brasil0.brasil.antonio.com
 
   brasilcli:
     container_name: brasilcli

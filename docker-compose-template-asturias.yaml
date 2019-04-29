@@ -110,7 +110,7 @@ services:
     networks:
       hf:
         aliases:
-          - couchdb_asturias0.asturias.arcelormittal.com
+          - couchdb_asturias0.asturias.antonio.com
            
   asturiascli:
     container_name: asturiascli

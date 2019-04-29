@@ -126,18 +126,13 @@ function remplazarClavePrivada () {
 }
 
 
-# startNetwork -> Inicia la red Fabric
-function startNetwork() {
-    echo
-    echo "================================================="
-    echo "---------- Iniciando la red Fabric --------------"
-    echo "================================================="
-    echo
-    cd $DIR
-    docker-compose -f docker-compose.yaml up -d
-}
-
+# up [org | orderer] -> Levanta o un orderer o una organizacion
 function up() {
+    echo
+    echo "================================================="
+    echo "---------- Iniciando" +  $ORG_DOCKER + "--------------"
+    echo "================================================="
+    echo
     docker stack deploy --compose-file docker-compose-$ORG_DOCKER.yaml --with-registry-auth fabric 2>&1
 }
 
@@ -190,26 +185,17 @@ function cleanNetwork() {
     
 }
 
-# networkStatus -> Devuelve el estado de la red
+# networkStatus -> Devuelve el estado de los contenedores del nodo
 function networkStatus() {
-    docker ps --format "{{.Names}}: {{.Status}}" | grep '[peer0* | orderer* | cli ]'
+    docker ps --format "Nombre: {{.Names}}, Estado: {{.Status}}, Puertos: {{.Ports}}" | grep '[peer0* | orderer* | cli ]'
 }
 
 # dockerCli -> Inicia un docker cli
 function dockerCli(){
-    docker exec -it cli /bin/bash
+    docker exec -it $(docker ps --format "{{.Names}}" | grep cli) /bin/bash
 }
 
-# comprobarArg -> Comprueba si el numero de parametros es correcto (arg==1)
-function comprobarArg() {
-    if [ $NUM_ARG -ne 1 ]; then
-        echo "Modo de ejecucion: "
-        echo "      # payascript.sh start | status | clean | cli"
-        exit 1;
-        exit 1;
-    fi
-}
-
+# dc -> Descarga las imagenes docker
 function dc(){
     downloadDockerImages
 }
@@ -217,15 +203,13 @@ function dc(){
 
 # ============ RUN =============
 
-# Network operations
-#comprobarArg
+# Opciones
 case $COMMAND in
     "start")
         generarCertificados
         generarChannelArtifacts
         remplazarClavePrivada
         downloadDockerImages
-        #startNetwork
         ;;
     "status")
         networkStatus

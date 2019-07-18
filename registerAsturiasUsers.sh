@@ -59,7 +59,7 @@ function registrarUsers(){
 }
 
 reemplazarClaves
-registrarAdmins
+#registrarAdmins
 registrarUsers
 
 

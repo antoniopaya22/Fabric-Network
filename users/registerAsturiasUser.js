@@ -26,15 +26,15 @@ fabric_client.initCredentialStores().then(() => {
     } else {
         throw new Error('Failed to get admin.... run registerAsturiasAdmin.js');
     }
-    return fabric_ca_client.register({enrollmentID: 'user1', affiliation: ''}, admin_user);
+    return fabric_ca_client.register({enrollmentID: 'userPrueba2', affiliation: ''}, admin_user);
 }).then((secret) => {
-    console.log('Successfully registered user1 - secret:'+ secret);
+    console.log('Successfully registered userPrueba - secret:'+ secret);
 
-    return fabric_ca_client.enroll({enrollmentID: 'user1', enrollmentSecret: secret});
+    return fabric_ca_client.enroll({enrollmentID: 'userPrueba2', enrollmentSecret: secret});
 }).then((enrollment) => {
-  console.log('Successfully enrolled member user "user1" ');
+  console.log('Successfully enrolled member user "userPrueba2" ');
   return fabric_client.createUser(
-     {username: 'user1',
+     {username: 'userPrueba2',
      mspid: 'asturiasMSP',
      cryptoContent: { privateKeyPEM: enrollment.key.toBytes(), signedCertPEM: enrollment.certificate }
      });
@@ -43,7 +43,7 @@ fabric_client.initCredentialStores().then(() => {
 
      return fabric_client.setUserContext(member_user);
 }).then(()=>{
-     console.log('AM User1 was successfully registered and enrolled and is ready to intreact with the fabric network');
+     console.log('UserPrueba2 was successfully registered and enrolled and is ready to intreact with the fabric network');
 
 }).catch((err) => {
     console.error('Failed to register: ' + err);

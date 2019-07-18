@@ -15,8 +15,8 @@ services:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca.chicago.antonio.com
       - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.chicago.antonio.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/1ff945e63c9702fecb2cea4c0df1f345e0736ec1cb34ebe4d17e31f718d24311_sk
-    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.chicago.antonio.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/1ff945e63c9702fecb2cea4c0df1f345e0736ec1cb34ebe4d17e31f718d24311_sk  -b admin:adminpw -d'
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/05dc0ce20f9a236b5888c1adf806410c9ecc342c8426a5c24a00a7634616bdd8_sk
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.chicago.antonio.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/05dc0ce20f9a236b5888c1adf806410c9ecc342c8426a5c24a00a7634616bdd8_sk  -b admin:adminpw -d'
     volumes:
       - ./crypto-config/peerOrganizations/chicago.antonio.com/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: caChicago
